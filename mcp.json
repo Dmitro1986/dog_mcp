@@ -1,0 +1,9 @@
+{
+    "mcpCervers": {
+        "Firecrawl": {
+            "host": "your_firecrawl_host",
+            "port": 8080,
+            "apiKey": "your_api_key"
+        }
+    }
+}
