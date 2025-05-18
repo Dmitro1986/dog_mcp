@@ -1,0 +1,27 @@
+doctype html
+html(lang="ru")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Универсальный веб-скрапер
+    link(rel="stylesheet" href="/css/output.css")
+    script(src="https://cdn.jsdelivr.net/npm/marked/marked.min.js")
+  
+  body.bg-gray-100
+    .container.mx-auto.px-4.py-8
+      h1.text-3xl.font-bold.mb-6 Универсальный веб-скрапер
+      .form-container.mb-6
+        input#urlInput(
+          class="w-full md:w-2/3 px-4 py-2 border rounded-lg mr-4"
+          type="url" 
+          placeholder="Введите URL сайта" 
+          required
+        )
+        button(
+          class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg"
+          onclick="startScraping()"
+        ) Начать скрапинг
+      
+      #result(class="bg-white rounded-lg shadow-lg p-6")
+
+    script(src="/js/main.js")

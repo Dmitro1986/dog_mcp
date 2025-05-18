@@ -1,9 +1,11 @@
 {
-    "mcpCervers": {
-        "Firecrawl": {
-            "host": "your_firecrawl_host",
-            "port": 8080,
-            "apiKey": "your_api_key"
+    "mcpServers": {
+        "firecrawl-mcp": {
+            "command": "npx",
+            "args": ["-y", "firecrawl-mcp"],
+            "env": {
+                "FIRECRAWL_API_KEY": "${process.env.FIRECRAWL_API_KEY}"
+            }
         }
     }
 }
