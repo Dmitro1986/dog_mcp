@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/scrape', async (req, res) => {
-    const { url } = req.body;
+    const { url, limits } = req.body;
     
     try {
         const response = await axios.get(url);
@@ -31,24 +31,24 @@ app.post('/scrape', async (req, res) => {
             keywords: $('meta[name="keywords"]').attr('content') || ''
         };
 
-        // Собираем все заголовки
+        // Собираем все заголовки с учетом лимита
         const headers = {
-            h1: $('h1').map((i, el) => $(el).text()).get(),
-            h2: $('h2').map((i, el) => $(el).text()).get(),
-            h3: $('h3').map((i, el) => $(el).text()).get()
+            h1: $('h1').map((i, el) => $(el).text()).get().slice(0, limits.headings),
+            h2: $('h2').map((i, el) => $(el).text()).get().slice(0, limits.headings),
+            h3: $('h3').map((i, el) => $(el).text()).get().slice(0, limits.headings)
         };
 
-        // Собираем все ссылки
+        // Собираем ссылки с учетом лимита
         const links = $('a').map((i, el) => ({
             text: $(el).text(),
             href: $(el).attr('href')
-        })).get();
+        })).get().slice(0, limits.links);
 
-        // Собираем все изображения
+        // Собираем изображения с учетом лимита
         const images = $('img').map((i, el) => ({
             alt: $(el).attr('alt'),
             src: $(el).attr('src')
-        })).get();
+        })).get().slice(0, limits.images);
 
         res.json({
             status: 'success',
@@ -56,8 +56,8 @@ app.post('/scrape', async (req, res) => {
             data: {
                 metadata,
                 headers,
-                links: links.slice(0, 10), // Ограничиваем количество ссылок
-                images: images.slice(0, 10) // Ограничиваем количество изображений
+                links,
+                images
             }
         });
     } catch (error) {
